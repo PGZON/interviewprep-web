@@ -9,6 +9,8 @@ import AdminStatsCards from '../components/Admin/AdminStatsCards';
 import UserListTable from '../components/Admin/UserListTable';
 import TestLogsTable from '../components/Admin/TestLogsTable';
 import QuestionAuditTable from '../components/Admin/QuestionAuditTable';
+import RecentLogsSection from '../components/Admin/RecentLogsSection';
+import SystemHealthWidget from '../components/Admin/SystemHealthWidget';
 
 // Icons
 import { FiBarChart2, FiSettings } from 'react-icons/fi';
@@ -72,6 +74,9 @@ const AdminDashboard = () => {
             className="space-y-6"
           >
             <AdminStatsCards stats={adminStats} loading={loading} />
+            
+            {/* System Health Widget */}
+            <SystemHealthWidget />
             
             {/* Quick Actions */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -158,6 +163,19 @@ const AdminDashboard = () => {
           </motion.div>
         );
 
+      case 'logs':
+        return (
+          <motion.div
+            key="logs"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <RecentLogsSection />
+          </motion.div>
+        );
+
       case 'analytics':
         return (
           <motion.div
@@ -211,7 +229,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
         <AdminHeader userStats={adminStats} />

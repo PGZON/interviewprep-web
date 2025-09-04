@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from 'react-icons/fa';
-import { login } from '../../services/authService';
+import { FaEye, FaEyeSlash, FaEnvelope, FaLock, FaGoogle } from 'react-icons/fa';
+import { login, loginWithGoogle } from '../../services/authService';
+import { getPostLoginRedirect } from '../../utils/authUtils';
 
 const LoginForm = ({ onSwitchToSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [apiError, setApiError] = useState('');
   const navigate = useNavigate();
@@ -30,20 +32,92 @@ const LoginForm = ({ onSwitchToSignup }) => {
       });
       
       console.log('Login successful, response:', response);
-      console.log('Navigating to dashboard...');
       
-      // Force a small delay to ensure tokens are stored
+      // Verify tokens were stored properly
+      const storedToken = localStorage.getItem('authToken');
+      console.log('Stored token available:', !!storedToken);
+      
+      // Determine redirect path based on user role
+      const redirectPath = getPostLoginRedirect();
+      console.log('Navigating to:', redirectPath);
+      
+      // Force a longer delay to ensure tokens are stored and processed
       setTimeout(() => {
-        navigate('/dashboard', { replace: true });
-      }, 100);
+        // Double check token is still available before redirect
+        if (localStorage.getItem('authToken')) {
+          navigate(redirectPath, { replace: true });
+        } else {
+          console.error('Token missing before redirect, aborting navigation');
+          setApiError('Authentication error: Login succeeded but session was lost');
+        }
+      }, 500);
     } catch (error) {
       console.error('Login error:', error);
       setApiError(
         error.response?.data?.message || 
+        error.message ||
         'Login failed. Please check your credentials and try again.'
       );
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setIsGoogleLoading(true);
+    setApiError('');
+
+    try {
+      console.log('Starting Google authentication flow...');
+      const response = await loginWithGoogle();
+      console.log('Google login successful, response:', response);
+      
+      // Verify tokens were stored properly
+      const storedToken = localStorage.getItem('authToken');
+      console.log('Stored token available after Google login:', !!storedToken);
+      
+      const redirectPath = getPostLoginRedirect();
+      console.log('Google login complete, redirecting to:', redirectPath);
+      
+      // Force a longer delay to ensure tokens are stored and processed
+      setTimeout(() => {
+        // Double check token is still available before redirect
+        if (localStorage.getItem('authToken')) {
+          navigate(redirectPath, { replace: true });
+        } else {
+          console.error('Token missing before redirect, aborting navigation');
+          setApiError('Authentication error: Login succeeded but session was lost');
+        }
+      }, 500);
+    } catch (error) {
+      console.error('Google login error:', error);
+      let errorMessage = 'Google sign-in failed. Please try again.';
+      
+      // Provide more specific error messages based on Firebase error codes
+      if (error.code === 'auth/popup-blocked') {
+        errorMessage = 'Popup was blocked. Please enable popups for this site and try again.';
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        errorMessage = 'Sign-in popup was closed. Please try again and complete the sign-in process.';
+      } else if (error.message && error.message.includes('cross-origin')) {
+        errorMessage = 'Browser security blocked the popup. Try disabling Enhanced Protection if enabled.';
+      }
+      
+      // Handle backend specific errors
+      if (error.response?.data) {
+        console.log('Backend error details:', error.response.data);
+        
+        if (error.response.data.message && error.response.data.message.includes('UID')) {
+          errorMessage = 'Authentication failed: User ID could not be verified. Please try again or use email login.';
+        }
+      }
+      
+      setApiError(
+        error.response?.data?.message || 
+        error.message || 
+        errorMessage
+      );
+    } finally {
+      setIsGoogleLoading(false);
     }
   };
 
@@ -179,6 +253,38 @@ const LoginForm = ({ onSwitchToSignup }) => {
               Sign up for free
             </button>
           </p>
+        </div>
+
+        {/* Social Login Options */}
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+            </div>
+          </div>
+          
+          <div className="mt-4">
+            <button
+              onClick={handleGoogleLogin}
+              disabled={isGoogleLoading}
+              className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isGoogleLoading ? (
+                <div className="flex items-center">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-700 mr-2"></div>
+                  Connecting...
+                </div>
+              ) : (
+                <>
+                  <FaGoogle className="h-5 w-5 text-red-500 mr-2" />
+                  Sign in with Google
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>

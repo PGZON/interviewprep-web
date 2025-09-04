@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance'; // Using new axios instance
 import { useToast } from '../contexts/ToastContext';
 
@@ -19,7 +18,6 @@ import { FiHome, FiRefreshCw } from 'react-icons/fi';
 import { useAuthErrors } from '../hooks/useAuthErrors';
 
 const UserDashboard = () => {
-  const navigate = useNavigate();
   const toast = useToast();
   const {
     sessionExpired,

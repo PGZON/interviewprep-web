@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash, FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
-import { signup } from '../../services/authService';
+import { FaEye, FaEyeSlash, FaEnvelope, FaLock, FaUser, FaGoogle } from 'react-icons/fa';
+import { signup, loginWithGoogle } from '../../services/authService';
 
 const SignupForm = ({ onSwitchToLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [apiError, setApiError] = useState('');
   const navigate = useNavigate();
 
@@ -41,6 +42,28 @@ const SignupForm = ({ onSwitchToLogin }) => {
       );
     } finally {
       setIsLoading(false);
+    }
+  };
+  
+  const handleGoogleSignup = async () => {
+    setIsGoogleLoading(true);
+    setApiError('');
+
+    try {
+      const response = await loginWithGoogle();
+      console.log('Google signup successful, response:', response);
+      
+      // Redirect to dashboard on successful signup
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Google signup error:', error);
+      setApiError(
+        error.response?.data?.message || 
+        error.message || 
+        'Google sign-up failed. Please try again.'
+      );
+    } finally {
+      setIsGoogleLoading(false);
     }
   };
 
@@ -264,6 +287,38 @@ const SignupForm = ({ onSwitchToLogin }) => {
               Sign in here
             </button>
           </p>
+        </div>
+
+        {/* Social Signup Options */}
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">Or sign up with</span>
+            </div>
+          </div>
+          
+          <div className="mt-4">
+            <button
+              onClick={handleGoogleSignup}
+              disabled={isGoogleLoading}
+              className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isGoogleLoading ? (
+                <div className="flex items-center">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-700 mr-2"></div>
+                  Connecting...
+                </div>
+              ) : (
+                <>
+                  <FaGoogle className="h-5 w-5 text-red-500 mr-2" />
+                  Sign up with Google
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>

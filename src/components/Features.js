@@ -104,32 +104,67 @@ const FeaturesSection = () => {
               animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
               transition={{ duration: 0.6, delay: feature.delay }}
               whileHover={{ 
-                y: -10,
-                transition: { duration: 0.2 }
+                y: -15,
+                scale: 1.02,
+                transition: { duration: 0.3, ease: "easeOut" }
               }}
-              className="group relative"
+              whileTap={{ scale: 0.98 }}
+              className="group relative cursor-pointer"
             >
               <div className="card-hover bg-white rounded-2xl p-8 shadow-lg border border-gray-100 h-full relative overflow-hidden">
                 {/* Background Gradient */}
-                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${feature.color}`}></div>
+                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${feature.color} group-hover:h-2 transition-all duration-300`}></div>
                 
                 {/* Floating Icon */}
                 <div className="relative mb-6">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                  <motion.div 
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                    className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-all duration-300`}
+                  >
                     <feature.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <div className={`absolute -top-1 -right-1 w-6 h-6 ${feature.bgColor} rounded-full opacity-20 animate-ping`}></div>
+                  </motion.div>
+                  <motion.div 
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className={`absolute -top-1 -right-1 w-6 h-6 ${feature.bgColor} rounded-full opacity-20`}
+                  ></motion.div>
                 </div>
 
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
+                <motion.h3 
+                  className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors"
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
                   {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
+                </motion.h3>
+                <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors">
                   {feature.description}
                 </p>
 
-                {/* Hover Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                {/* Animated Gradient Overlay */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                  initial={false}
+                  whileHover={{ 
+                    background: [
+                      "linear-gradient(45deg, rgba(59, 130, 246, 0.05), rgba(168, 85, 247, 0.05))",
+                      "linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(59, 130, 246, 0.05))",
+                      "linear-gradient(225deg, rgba(59, 130, 246, 0.05), rgba(168, 85, 247, 0.05))"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                
+                {/* Shimmer Effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "100%" }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                  />
+                </div>
               </div>
             </motion.div>
           ))}

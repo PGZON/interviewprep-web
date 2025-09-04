@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiCheckCircle, FiAlertCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi';
 
@@ -11,12 +11,12 @@ const Toast = ({
 }) => {
   const [isVisible, setIsVisible] = useState(true);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsVisible(false);
     setTimeout(() => {
       onClose?.();
     }, 300); // Wait for exit animation
-  };
+  }, [onClose]);
 
   useEffect(() => {
     if (duration > 0) {
@@ -26,7 +26,7 @@ const Toast = ({
 
       return () => clearTimeout(timer);
     }
-  }, [duration, onClose]); // Include onClose in dependencies
+  }, [duration, handleClose]);
 
   const getIcon = () => {
     switch (type) {

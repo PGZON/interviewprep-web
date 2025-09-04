@@ -1,14 +1,27 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { FiArrowRight, FiPlay, FiStar, FiTrendingUp } from 'react-icons/fi';
 
 const HeroSection = () => {
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  
+  // Floating code snippets data
+  const codeSnippets = [
+    { code: 'function interview() {', x: 20, y: 30, delay: 0.2 },
+    { code: 'return "success";', x: 70, y: 60, delay: 0.8 },
+    { code: 'console.log("hired!");', x: 15, y: 80, delay: 1.2 },
+    { code: 'let skills = [];', x: 75, y: 20, delay: 0.5 },
+    { code: 'skills.push("react");', x: 60, y: 85, delay: 1.0 }
+  ];
+
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-mesh">
-      {/* Animated Background Elements */}
+      {/* Enhanced Animated Background Elements */}
       <div className="absolute inset-0">
-        {/* Floating geometric shapes */}
+        {/* Floating geometric shapes with parallax */}
         <motion.div
+          style={{ y }}
           animate={{
             y: [0, -20, 0],
             rotate: [0, 180, 360],
@@ -21,6 +34,7 @@ const HeroSection = () => {
           className="absolute top-20 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-xl"
         />
         <motion.div
+          style={{ y: useTransform(scrollYProgress, [0, 1], ['0%', '30%']) }}
           animate={{
             y: [0, 30, 0],
             rotate: [360, 180, 0],
@@ -32,18 +46,39 @@ const HeroSection = () => {
           }}
           className="absolute bottom-20 right-10 w-48 h-48 bg-purple-500/10 rounded-full blur-2xl"
         />
-        <motion.div
-          animate={{
-            x: [0, 25, 0],
-            y: [0, -15, 0],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-1/2 left-1/3 w-24 h-24 bg-cyan-500/10 rounded-full blur-lg"
-        />
+        
+        {/* Floating Code Snippets */}
+        {codeSnippets.map((snippet, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ 
+              opacity: [0, 1, 1, 0], 
+              y: [50, 0, -10, -50],
+              x: [0, Math.sin(index) * 20, 0]
+            }}
+            transition={{
+              duration: 8,
+              delay: snippet.delay,
+              repeat: Infinity,
+              repeatDelay: 3
+            }}
+            className="absolute hidden lg:block"
+            style={{ left: `${snippet.x}%`, top: `${snippet.y}%` }}
+          >
+            <div className="bg-gray-900/80 backdrop-blur-sm border border-green-500/30 rounded-lg px-3 py-2 text-green-400 font-mono text-sm shadow-lg">
+              {snippet.code}
+            </div>
+          </motion.div>
+        ))}
+        
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="h-full w-full" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='m0 40h40v-40h-40z'/%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">

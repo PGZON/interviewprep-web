@@ -11,7 +11,7 @@ const CTASection = () => {
 
   const benefits = [
     'Unlimited practice questions',
-    'AI-powered personalization',
+    'AI-powered personalization', 
     'Real-time feedback',
     'Progress tracking',
     'Community support'
@@ -128,7 +128,7 @@ const CTASection = () => {
               ))}
             </motion.div>
 
-            {/* CTA Buttons */}
+            {/* Enhanced CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -137,31 +137,88 @@ const CTASection = () => {
             >
               <motion.a
                 href="#signup"
-                whileHover={{ scale: 1.05, y: -3 }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -5,
+                  boxShadow: "0 25px 50px rgba(0,0,0,0.5)"
+                }}
                 whileTap={{ scale: 0.95 }}
                 className="group relative bg-white text-blue-600 px-10 py-5 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-3xl transition-all duration-300 overflow-hidden"
               >
-                <span className="relative z-10 flex items-center space-x-3">
+                {/* Animated Background */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  whileHover={{
+                    background: [
+                      "linear-gradient(45deg, #2563eb, #7c3aed)",
+                      "linear-gradient(135deg, #7c3aed, #2563eb)",
+                      "linear-gradient(225deg, #2563eb, #7c3aed)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                
+                {/* Shimmer Effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                />
+                
+                <span className="relative z-10 flex items-center space-x-3 group-hover:text-white transition-colors duration-300">
                   <span>Start Free Trial</span>
                   <motion.div
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
+                    whileHover={{ x: 8, scale: 1.2 }}
                   >
                     <FiArrowRight className="w-6 h-6" />
                   </motion.div>
                 </span>
                 
-                {/* Shine Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                {/* Floating Particles */}
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100"
+                    style={{
+                      left: `${Math.random() * 100}%`,
+                      top: `${Math.random() * 100}%`,
+                    }}
+                    animate={{
+                      y: [0, -20, 0],
+                      opacity: [0, 1, 0],
+                      scale: [0, 1, 0]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: Math.random() * 2
+                    }}
+                  />
+                ))}
               </motion.a>
 
               <motion.a
                 href="#demo"
-                whileHover={{ scale: 1.05, y: -3 }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -3,
+                  borderColor: "rgba(255,255,255,1)"
+                }}
                 whileTap={{ scale: 0.95 }}
-                className="glass backdrop-blur-xl border-2 border-white/30 text-white px-10 py-5 rounded-2xl font-bold text-xl hover:bg-white/10 transition-all duration-300"
+                className="group relative border-2 border-white/30 text-white px-10 py-5 rounded-2xl font-bold text-xl hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
               >
-                Watch Demo
+                <span className="relative z-10 flex items-center space-x-3">
+                  <span>Watch Demo</span>
+                  <motion.div
+                    whileHover={{ scale: 1.3, rotate: 90 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <FiStar className="w-6 h-6" />
+                  </motion.div>
+                </span>
               </motion.a>
             </motion.div>
 

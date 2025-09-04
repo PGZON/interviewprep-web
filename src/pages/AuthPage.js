@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import LoginForm from '../components/Auth/LoginForm';
 import SignupForm from '../components/Auth/SignupForm';
 import OAuthButtons from '../components/Auth/OAuthButtons';
-import { isAuthenticated } from '../services/authService';
+import { getAuthStatus } from '../utils/authUtils';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -14,9 +14,13 @@ const AuthPage = () => {
   // Redirect if already authenticated
   useEffect(() => {
     console.log('AuthPage: Checking authentication status');
-    if (isAuthenticated()) {
-      console.log('AuthPage: User is authenticated, redirecting to dashboard');
-      navigate('/dashboard');
+    const authStatus = getAuthStatus();
+    
+    if (authStatus.isAuthenticated) {
+      console.log('AuthPage: User is authenticated');
+      console.log('Auth status:', authStatus);
+      console.log('Redirecting to:', authStatus.redirectPath);
+      navigate(authStatus.redirectPath);
     } else {
       console.log('AuthPage: User is not authenticated');
     }
@@ -25,9 +29,10 @@ const AuthPage = () => {
   // Also check authentication when the component re-renders
   useEffect(() => {
     const checkAuth = () => {
-      if (isAuthenticated()) {
-        console.log('AuthPage: Authentication detected, redirecting...');
-        navigate('/dashboard');
+      const authStatus = getAuthStatus();
+      if (authStatus.isAuthenticated) {
+        console.log('AuthPage: Authentication detected, redirecting to:', authStatus.redirectPath);
+        navigate(authStatus.redirectPath);
       }
     };
     

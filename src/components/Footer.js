@@ -6,7 +6,6 @@ import {
   FiLinkedin, 
   FiTwitter, 
   FiMail,
-  FiHeart,
   FiCode,
   FiArrowUp,
   FiExternalLink
@@ -64,32 +63,28 @@ const Footer = () => {
   const socialLinks = [
     { 
       icon: FiGithub, 
-      href: "https://github.com", 
-      label: "GitHub",
+      href: "https://github.com/pgzon", 
+      label: "GitHub - pgzon",
       color: "hover:text-gray-300"
     },
     { 
       icon: FiLinkedin, 
-      href: "https://linkedin.com", 
+      href: "https://linkedin.com/in/pgzon", 
       label: "LinkedIn",
       color: "hover:text-blue-400"
     },
     { 
       icon: FiTwitter, 
-      href: "https://twitter.com", 
+      href: "https://twitter.com/pgzon", 
       label: "Twitter",
       color: "hover:text-blue-400"
     },
     { 
       icon: FiMail, 
-      href: "mailto:contact@interviewprep.ai", 
+      href: "mailto:pgzon@interviewprep.ai", 
       label: "Email",
       color: "hover:text-green-400"
     }
-  ];
-
-  const techStack = [
-    "React", "Spring Boot", "PostgreSQL", "Docker", "AWS", "Tailwind CSS"
   ];
 
   const scrollToTop = () => {
@@ -202,33 +197,6 @@ const Footer = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* Tech Stack */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-16 pt-12 border-t border-gray-800"
-        >
-          <div className="flex items-center justify-center mb-6">
-            <FiCode className="w-5 h-5 mr-2 text-gray-400" />
-            <span className="text-gray-400 text-sm">Built with</span>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            {techStack.map((tech, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
-                whileHover={{ scale: 1.1, y: -2 }}
-                className="px-4 py-2 bg-gray-800/50 backdrop-blur-sm rounded-full text-sm text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-gray-600"
-              >
-                {tech}
-              </motion.span>
-            ))}
-          </div>
-        </motion.div>
       </div>
 
       {/* Bottom Section */}
@@ -242,20 +210,18 @@ const Footer = () => {
           >
             <div className="flex items-center mb-4 md:mb-0">
               <span className="text-gray-400">© 2025 InterviewPrep. All rights reserved.</span>
+              <span className="text-gray-500 mx-2">|</span>
+              <span className="text-gray-400">Created by </span>
+              <a 
+                href="https://github.com/pgzon" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 transition-colors ml-1 hover:underline"
+              >
+                @pgzon
+              </a>
             </div>
             <div className="flex items-center space-x-6">
-              <div className="flex items-center text-gray-400">
-                <span>Made with</span>
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                  className="mx-2"
-                >
-                  <FiHeart className="w-4 h-4 text-red-500 fill-current" />
-                </motion.div>
-                <span>for developers worldwide</span>
-              </div>
-              
               {/* Scroll to Top Button */}
               <motion.button
                 onClick={scrollToTop}

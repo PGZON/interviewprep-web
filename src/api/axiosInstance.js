@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { shouldRefreshToken, clearAuthStorage } from '../utils/tokenUtils';
+import config from '../config/config';
 
 // Create Axios instance with base configuration
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: config.API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -32,7 +33,7 @@ axiosInstance.interceptors.request.use(
         if (refreshToken) {
           try {
             // Use plain axios for refresh to avoid interceptor recursion
-            const refreshResponse = await axios.post("http://localhost:8080/api/auth/refresh-token", { 
+            const refreshResponse = await axios.post(config.REFRESH_TOKEN_URL, { 
               refreshToken 
             }, {
               headers: {
@@ -104,7 +105,7 @@ axiosInstance.interceptors.response.use(
       if (refreshToken) {
         try {
           // Attempt to refresh the token using plain axios to avoid interceptor recursion
-          const refreshResponse = await axios.post("http://localhost:8080/api/auth/refresh-token", { 
+          const refreshResponse = await axios.post(config.REFRESH_TOKEN_URL, { 
             refreshToken 
           }, {
             headers: {

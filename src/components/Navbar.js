@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { FiMenu, FiX, FiCode } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../services/authService';
@@ -9,6 +9,10 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const userIsAuthenticated = isAuthenticated();
+  
+  const { scrollY } = useScroll();
+  const navbarOpacity = useTransform(scrollY, [0, 100], [0.9, 1]);
+  const navbarScale = useTransform(scrollY, [0, 100], [0.98, 1]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +42,10 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
+      style={{ 
+        opacity: navbarOpacity,
+        scale: navbarScale
+      }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 

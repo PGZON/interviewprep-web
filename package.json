@@ -8,6 +8,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.11.0",
+    "firebase": "^10.10.0",
     "framer-motion": "^12.23.9",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.0",

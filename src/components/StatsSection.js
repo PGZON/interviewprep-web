@@ -110,25 +110,67 @@ const StatsSection = () => {
               animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
               transition={{ duration: 0.6, delay: stat.delay }}
               whileHover={{ 
-                y: -10,
-                transition: { duration: 0.2 }
+                y: -15,
+                scale: 1.05,
+                rotateY: 5,
+                transition: { duration: 0.3, ease: "easeOut" }
               }}
-              className="group relative"
+              className="group relative cursor-pointer"
             >
               <div className="glass backdrop-blur-xl border border-white/20 rounded-2xl p-8 text-center relative overflow-hidden group-hover:border-white/40 transition-all duration-300">
-                {/* Background Glow Effect */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${stat.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                {/* Animated Background Glow Effect */}
+                <motion.div 
+                  className={`absolute inset-0 bg-gradient-to-r ${stat.color} opacity-5 group-hover:opacity-15 transition-opacity duration-300`}
+                  whileHover={{
+                    background: [
+                      `linear-gradient(45deg, ${stat.color.split(' ')[1]}, ${stat.color.split(' ')[3]})`,
+                      `linear-gradient(135deg, ${stat.color.split(' ')[3]}, ${stat.color.split(' ')[1]})`,
+                      `linear-gradient(225deg, ${stat.color.split(' ')[1]}, ${stat.color.split(' ')[3]})`
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
                 
-                {/* Icon */}
+                {/* Icon with Enhanced Animation */}
                 <div className="relative mb-6">
-                  <div className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-r ${stat.color} flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300`}>
+                  <motion.div 
+                    whileHover={{ 
+                      rotate: [0, -10, 10, -5, 5, 0],
+                      scale: 1.2
+                    }}
+                    transition={{ duration: 0.5 }}
+                    className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-r ${stat.color} flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-all duration-300`}
+                  >
                     <stat.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <div className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-gradient-to-r ${stat.color} rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300`}></div>
+                  </motion.div>
+                  
+                  {/* Pulsing Glow */}
+                  <motion.div 
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      opacity: [0.3, 0.6, 0.3]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: stat.delay
+                    }}
+                    className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-gradient-to-r ${stat.color} rounded-2xl blur-xl`}
+                  />
                 </div>
 
-                {/* Number */}
-                <div className="relative mb-2">
+                {/* Number with Glitch Effect */}
+                <motion.div 
+                  className="relative mb-2"
+                  whileHover={{
+                    textShadow: [
+                      "0 0 0px rgba(255,255,255,0)",
+                      "0 0 20px rgba(255,255,255,0.8)",
+                      "0 0 0px rgba(255,255,255,0)"
+                    ]
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
                   <span className="text-4xl md:text-5xl font-bold text-white">
                     {inView && (
                       <CountUp
@@ -141,12 +183,15 @@ const StatsSection = () => {
                     )}
                     <span className="text-3xl">{stat.suffix}</span>
                   </span>
-                </div>
+                </motion.div>
 
-                {/* Label */}
-                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-cyan-300 transition-colors">
+                {/* Animated Label */}
+                <motion.h3 
+                  className="text-xl font-semibold text-white mb-2 group-hover:text-cyan-300 transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                >
                   {stat.label}
-                </h3>
+                </motion.h3>
 
                 {/* Description */}
                 <p className="text-white/60 group-hover:text-white/80 transition-colors">
