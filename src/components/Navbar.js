@@ -59,21 +59,26 @@ const Navbar = () => {
           <motion.div
             whileHover={{ scale: 1.05 }}
             className="flex items-center space-x-3 cursor-pointer"
+            onClick={() => navigate('/')}
           >
             <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <FiCode className="text-white text-lg" />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 rounded-xl flex items-center justify-center shadow-xl border-2 border-blue-400/30">
+                <FiCode className="text-white text-2xl" />
               </div>
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-pulse border border-white"></div>
             </div>
             <div className="flex flex-col">
-              <span className={`text-xl font-bold transition-colors duration-300 ${
-                isScrolled ? 'text-gray-900' : 'text-white'
+              <span className={`text-3xl md:text-4xl font-extrabold tracking-tight transition-colors duration-300 ${
+                isScrolled 
+                ? 'bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-700' 
+                : 'text-white drop-shadow-md'
               }`}>
                 InterviewPrep
               </span>
-              <span className={`text-xs font-medium transition-colors duration-300 ${
-                isScrolled ? 'text-gray-500' : 'text-white/70'
+              <span className={`text-xs font-semibold tracking-wider transition-colors duration-300 ${
+                isScrolled 
+                ? 'text-blue-600' 
+                : 'text-blue-300 drop-shadow-md'
               }`}>
                 AI Powered
               </span>

@@ -91,6 +91,7 @@ const RecentLogsSection = () => {
   const [autoRefresh, setAutoRefresh] = useState(false);
 
   // Sample logs data for demo/fallback
+  // eslint-disable-next-line no-unused-vars
   const sampleLogs = [
     {
       id: 1,

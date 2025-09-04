@@ -1,7 +1,12 @@
 import axios from "axios";
 import config from "../config/config";
 import { auth, signInWithGoogle } from "../config/firebase";
-import { signInWithEmailAndPassword, signOut, getIdToken } from "firebase/auth";
+import { 
+  signInWithEmailAndPassword, 
+  signOut, 
+  getIdToken,
+  sendPasswordResetEmail
+} from "firebase/auth";
 import { jwtDecode } from "jwt-decode";
 
 // Create axios instance with base configuration
@@ -332,6 +337,33 @@ export const isAuthenticated = () => {
   const token = localStorage.getItem("authToken"); // Fixed: using consistent key
   console.log('Checking authentication, token:', token ? 'exists' : 'missing');
   return !!token;
+};
+
+/**
+ * Sends a password reset email to the provided email address
+ * @param {string} email - The email address to send the reset link to
+ * @returns {Promise} - Promise that resolves when the email is sent
+ */
+export const forgotPassword = async (email) => {
+  try {
+    // Send password reset email via Firebase
+    await sendPasswordResetEmail(auth, email);
+    
+    // Note: If backend API call fails, we will still consider the password reset successful
+    // as long as the Firebase email was sent
+    try {
+      // The correct endpoint based on the error in the console
+      await API.post("/auth/forget-password", { email });
+    } catch (backendError) {
+      console.warn('Backend password reset notification failed, but Firebase email was sent:', backendError);
+      // Continue execution - we don't want to fail the whole process if just the backend notification fails
+    }
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Error sending password reset email:', error);
+    throw error;
+  }
 };
 
 // OAuth2 URLs

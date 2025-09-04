@@ -13,10 +13,12 @@ import {
   FiShield
 } from 'react-icons/fi';
 import { isAdmin } from '../../utils/auth';
+import { getCurrentUser } from '../../services/authService';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
   const userIsAdmin = isAdmin();
+  const user = getCurrentUser();
 
   const sidebarLinks = [
     { 
@@ -98,12 +100,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           {/* Logo and close button */}
           <div className="flex h-16 items-center justify-between px-6 border-b border-white/20">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
-                <FiCode className="text-white text-sm" />
+              <div className="relative">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-700 rounded-lg flex items-center justify-center shadow-lg border-2 border-indigo-400/30">
+                  <FiCode className="text-white text-sm" />
+                </div>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse border border-white"></div>
               </div>
               <div>
-                <h1 className="text-lg font-bold text-gray-900">InterviewPrep</h1>
-                <p className="text-xs text-gray-500">AI Powered</p>
+                <h1 className="text-lg font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-700 leading-none">InterviewPrep</h1>
+                <p className="text-xs font-semibold tracking-wide text-blue-600">AI Powered</p>
               </div>
             </div>
             <button
@@ -175,15 +180,25 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           {/* User section */}
           <div className="border-t border-white/20 p-4">
             <div className="flex items-center space-x-3 p-3 rounded-xl bg-gradient-to-r from-gray-50 to-white shadow-md">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-medium text-sm shadow-lg">
-                JD
-              </div>
+              {user?.photoURL ? (
+                // If user has a profile photo (Google login)
+                <img 
+                  src={user.photoURL} 
+                  alt={user?.name || 'Profile'} 
+                  className="w-10 h-10 rounded-full object-cover shadow-lg" 
+                />
+              ) : (
+                // Fallback to initials avatar
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-medium text-sm shadow-lg">
+                  {user?.name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}
+                </div>
+              )}
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-medium text-gray-900 truncate">
-                  John Doe
+                  {user?.name || user?.displayName || user?.email?.split('@')[0] || 'User'}
                 </div>
                 <div className="text-xs text-gray-500">
-                  Premium Member
+                  {user?.role === 'ADMIN' ? 'Admin' : user?.role || 'User'}
                 </div>
               </div>
             </div>

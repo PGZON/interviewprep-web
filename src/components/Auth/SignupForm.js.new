@@ -112,7 +112,6 @@ const SignupForm = ({ onSwitchToLogin }) => {
     }
   };
 
-  // eslint-disable-next-line no-unused-vars
   const buttonVariants = {
     initial: { scale: 1 },
     hover: { scale: 1.02, transition: { duration: 0.2 } },

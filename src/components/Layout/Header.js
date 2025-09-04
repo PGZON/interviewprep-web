@@ -6,7 +6,8 @@ import {
   FiBell, 
   FiSettings, 
   FiLogOut,
-  FiChevronDown
+  FiChevronDown,
+  FiCode
 } from 'react-icons/fi';
 import { getCurrentUser, logout } from '../../services/authService';
 
@@ -30,8 +31,14 @@ const Header = ({ setSidebarOpen }) => {
           >
             <FiMenu size={20} />
           </button>
-          <div className="lg:hidden ml-2">
-            <h1 className="text-lg font-semibold text-gray-900">Dashboard</h1>
+          <div className="lg:hidden ml-2 flex items-center">
+            <div className="w-7 h-7 bg-gradient-to-r from-blue-600 to-purple-700 rounded-lg flex items-center justify-center shadow-lg mr-2">
+              <FiCode className="text-white text-sm" />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-700">InterviewPrep</h1>
+              <p className="text-[10px] text-gray-500 -mt-1">AI Powered</p>
+            </div>
           </div>
         </div>
 
@@ -62,14 +69,24 @@ const Header = ({ setSidebarOpen }) => {
               whileHover={{ scale: 1.02 }}
               className="flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-white/50 transition-all duration-200"
             >
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">
-                  {user?.name?.charAt(0).toUpperCase() || 'U'}
-                </span>
-              </div>
+              {user?.photoURL ? (
+                // If user has a profile photo (Google login)
+                <img 
+                  src={user.photoURL} 
+                  alt={user?.name || 'Profile'} 
+                  className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm" 
+                />
+              ) : (
+                // Fallback to initials avatar
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">
+                    {user?.name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}
+                  </span>
+                </div>
+              )}
               <div className="hidden sm:block text-left">
                 <div className="text-sm font-medium text-gray-900">
-                  {user?.name || 'User'}
+                  {user?.name || user?.displayName || user?.email?.split('@')[0] || 'User'}
                 </div>
                 <div className="text-xs text-gray-500">
                   {user?.email || 'user@example.com'}
