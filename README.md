@@ -1,3 +1,61 @@
+# InterviewPrep
+
+InterviewPrep is an AI-powered web application designed to help users prepare for technical interviews. It offers personalized coding questions, instant feedback, progress tracking, and a modern, engaging UI.
+
+## Project Overview
+InterviewPrep combines a React frontend with a Spring Boot backend, leveraging AI to generate and review coding questions. The platform is built for software engineers, students, and job seekers aiming to ace their next technical interview.
+
+## Features
+- AI-generated coding and MCQ questions
+- Real-time feedback and answer review
+- User dashboard with progress tracking
+- Session summaries and analytics
+- Admin panel for managing questions and users
+- Responsive, modern UI with gradient branding
+- Secure authentication and JWT-based sessions
+
+## Tech Stack
+- **Frontend:** React, Tailwind CSS, Framer Motion, Axios
+- **Backend:** Spring Boot, Java, JWT, REST APIs
+- **AI Integration:** HuggingFace API
+- **Database:** (your DB here, e.g., PostgreSQL, MySQL)
+- **Other:** React Icons, ESLint, Create React App
+
+## Getting Started
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/pgzon/interviewprep.git
+   cd interviewprep
+   ```
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+3. **Start the frontend:**
+   ```sh
+   npm start
+   ```
+4. **Start the backend:**
+   - See `SpringBoot/README.md` or run your Spring Boot server
+
+## Environment Setup
+- See `docs/ENVIRONMENT_SETUP.md` for environment variables and configuration
+- Example: `REACT_APP_APP_NAME=InterviewPrep`
+
+## Folder Structure
+- `src/` - React frontend source code
+- `SpringBoot/` - Java backend source code
+- `public/` - Static assets
+- `docs/` - Documentation
+
+## Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+This project is licensed under the MIT License.
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
