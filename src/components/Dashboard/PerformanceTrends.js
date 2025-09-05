@@ -9,13 +9,17 @@ const PerformanceTrends = ({ performanceData = [] }) => {
 
   // Sample data if no real data provided
   const sampleData = [
-    { date: '2025-01-01', score: 65, tests: 2 },
-    { date: '2025-01-05', score: 72, tests: 1 },
-    { date: '2025-01-10', score: 68, tests: 3 },
-    { date: '2025-01-15', score: 78, tests: 2 },
-    { date: '2025-01-20', score: 82, tests: 1 },
-    { date: '2025-01-25', score: 75, tests: 2 },
-    { date: '2025-01-30', score: 88, tests: 1 }
+    { date: '2025-08-01', score: 65, tests: 2 },
+    { date: '2025-08-05', score: 72, tests: 1 },
+    { date: '2025-08-10', score: 68, tests: 3 },
+    { date: '2025-08-15', score: 78, tests: 2 },
+    { date: '2025-08-20', score: 82, tests: 1 },
+    { date: '2025-08-25', score: 75, tests: 2 },
+    { date: '2025-08-28', score: 88, tests: 1 },
+    { date: '2025-08-30', score: 85, tests: 2 },
+    { date: '2025-09-01', score: 90, tests: 1 },
+    { date: '2025-09-03', score: 92, tests: 2 },
+    { date: '2025-09-05', score: 95, tests: 1 }
   ];
 
   const data = performanceData.length > 0 ? performanceData : sampleData;
@@ -41,12 +45,12 @@ const PerformanceTrends = ({ performanceData = [] }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white/90 backdrop-blur-md p-3 rounded-lg shadow-lg border border-white/20">
-          <p className="text-sm font-medium text-gray-900">{formatDate(label)}</p>
-          <p className="text-sm text-blue-600">
+          <p className="text-base font-medium text-gray-900">{formatDate(label)}</p>
+          <p className="text-base text-blue-600">
             Score: <span className="font-bold">{payload[0].value}%</span>
           </p>
           {payload[1] && (
-            <p className="text-sm text-green-600">
+            <p className="text-base text-green-600">
               Tests: <span className="font-bold">{payload[1].value}</span>
             </p>
           )}
@@ -67,7 +71,7 @@ const PerformanceTrends = ({ performanceData = [] }) => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
         <div className="flex items-center space-x-2 mb-4 sm:mb-0">
           <FiTrendingUp className="text-blue-600" size={24} />
-          <h3 className="text-xl font-bold text-gray-900">Performance Trends</h3>
+          <h3 className="text-2xl font-bold text-gray-900">Performance Trends</h3>
         </div>
 
         <div className="flex items-center space-x-2">

@@ -21,41 +21,41 @@ const Footer = () => {
     {
       title: "Product",
       links: [
-        { name: "Features", href: "#features" },
-        { name: "Pricing", href: "#pricing" },
-        { name: "Demo", href: "#demo" },
-        { name: "API", href: "#api" },
-        { name: "Integrations", href: "#integrations" }
+        { name: "Features", href: "/features" },
+        { name: "Pricing", href: "/pricing" },
+        { name: "Demo", href: "/demo" },
+        { name: "API", href: "/api" },
+        { name: "Integrations", href: "/integrations" }
       ]
     },
     {
       title: "Company",
       links: [
-        { name: "About", href: "#about" },
-        { name: "Blog", href: "#blog" },
-        { name: "Careers", href: "#careers" },
-        { name: "Contact", href: "#contact" },
-        { name: "Press", href: "#press" }
+        { name: "About", href: "/about" },
+        { name: "Blog", href: "/blog" },
+        { name: "Careers", href: "/careers" },
+        { name: "Contact", href: "/contact" },
+        { name: "Press", href: "/press" }
       ]
     },
     {
       title: "Resources",
       links: [
-        { name: "Documentation", href: "#docs" },
-        { name: "Help Center", href: "#help" },
-        { name: "Community", href: "#community" },
-        { name: "Tutorials", href: "#tutorials" },
-        { name: "Status", href: "#status" }
+        { name: "Documentation", href: "/docs" },
+        { name: "Help Center", href: "/help" },
+        { name: "Community", href: "/community" },
+        { name: "Tutorials", href: "/tutorials" },
+        { name: "Status", href: "/status" }
       ]
     },
     {
       title: "Legal",
       links: [
-        { name: "Privacy Policy", href: "#privacy" },
-        { name: "Terms of Service", href: "#terms" },
-        { name: "Cookie Policy", href: "#cookies" },
-        { name: "GDPR", href: "#gdpr" },
-        { name: "Security", href: "#security" }
+        { name: "Privacy Policy", href: "/privacy" },
+        { name: "Terms of Service", href: "/terms" },
+        { name: "Cookie Policy", href: "/cookies" },
+        { name: "GDPR", href: "/gdpr" },
+        { name: "Security", href: "/security" }
       ]
     }
   ];
@@ -69,19 +69,19 @@ const Footer = () => {
     },
     { 
       icon: FiLinkedin, 
-      href: "https://linkedin.com/in/pgzon", 
+      href: "https://linkedin.com/in/prathameshgadgil", 
       label: "LinkedIn",
       color: "hover:text-blue-400"
     },
     { 
       icon: FiTwitter, 
-      href: "https://twitter.com/pgzon", 
+      href: "https://x.com/prathamesh05_", 
       label: "Twitter",
       color: "hover:text-blue-400"
     },
     { 
       icon: FiMail, 
-      href: "mailto:pgzon@interviewprep.ai", 
+      href: "mailto:prathameshgadgil2005@gmail.com", 
       label: "Email",
       color: "hover:text-green-400"
     }
@@ -154,12 +154,12 @@ const Footer = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="flex-1 px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="btn-gradient px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all duration-300"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 px-6 py-3 rounded-lg font-medium text-white shadow-lg hover:shadow-purple-500/20 transition-all duration-300"
                 >
                   Subscribe
                 </motion.button>

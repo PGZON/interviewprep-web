@@ -10,6 +10,26 @@ import DashboardLayout from '../components/Layout/DashboardLayout';
 import LandingPage from '../pages/LandingPage';
 import AuthPage from '../pages/AuthPage';
 import OAuthCallback from '../pages/OAuthCallback';
+import FeaturesPage from '../pages/FeaturesPage';
+import PricingPage from '../pages/PricingPage';
+import APIPage from '../pages/APIPage';
+import DemoPage from '../pages/DemoPage';
+import IntegrationsPage from '../pages/IntegrationsPage';
+import AboutPage from '../pages/AboutPage';
+import BlogPage from '../pages/BlogPage';
+import CareersPage from '../pages/CareersPage';
+import ContactPage from '../pages/ContactPage';
+import PressPage from '../pages/PressPage';
+import DocumentationPage from '../pages/DocumentationPage';
+import HelpCenterPage from '../pages/HelpCenterPage';
+import CommunityPage from '../pages/CommunityPage';
+import TutorialsPage from '../pages/TutorialsPage';
+import StatusPage from '../pages/StatusPage';
+import PrivacyPolicyPage from '../pages/PrivacyPolicyPage';
+import TermsOfServicePage from '../pages/TermsOfServicePage';
+import CookiePolicyPage from '../pages/CookiePolicyPage';
+import GDPRPage from '../pages/GDPRPage';
+import SecurityPage from '../pages/SecurityPage';
 import UserDashboard from '../pages/UserDashboard';
 import StartTestPage from '../pages/StartTestPage';
 import TestAttemptPage from '../pages/TestAttemptPage';
@@ -49,6 +69,126 @@ const AppRoutes = () => {
       <Route path="/" element={
         <PageTransition>
           <LandingPage />
+        </PageTransition>
+      } />
+
+      <Route path="/features" element={
+        <PageTransition>
+          <FeaturesPage />
+        </PageTransition>
+      } />
+
+      <Route path="/pricing" element={
+        <PageTransition>
+          <PricingPage />
+        </PageTransition>
+      } />
+
+      <Route path="/api" element={
+        <PageTransition>
+          <APIPage />
+        </PageTransition>
+      } />
+
+      <Route path="/demo" element={
+        <PageTransition>
+          <DemoPage />
+        </PageTransition>
+      } />
+
+      <Route path="/integrations" element={
+        <PageTransition>
+          <IntegrationsPage />
+        </PageTransition>
+      } />
+
+      <Route path="/about" element={
+        <PageTransition>
+          <AboutPage />
+        </PageTransition>
+      } />
+
+      <Route path="/blog" element={
+        <PageTransition>
+          <BlogPage />
+        </PageTransition>
+      } />
+
+      <Route path="/careers" element={
+        <PageTransition>
+          <CareersPage />
+        </PageTransition>
+      } />
+
+      <Route path="/contact" element={
+        <PageTransition>
+          <ContactPage />
+        </PageTransition>
+      } />
+
+      <Route path="/press" element={
+        <PageTransition>
+          <PressPage />
+        </PageTransition>
+      } />
+
+      <Route path="/docs" element={
+        <PageTransition>
+          <DocumentationPage />
+        </PageTransition>
+      } />
+
+      <Route path="/help" element={
+        <PageTransition>
+          <HelpCenterPage />
+        </PageTransition>
+      } />
+
+      <Route path="/community" element={
+        <PageTransition>
+          <CommunityPage />
+        </PageTransition>
+      } />
+
+      <Route path="/tutorials" element={
+        <PageTransition>
+          <TutorialsPage />
+        </PageTransition>
+      } />
+
+      <Route path="/status" element={
+        <PageTransition>
+          <StatusPage />
+        </PageTransition>
+      } />
+
+      <Route path="/privacy" element={
+        <PageTransition>
+          <PrivacyPolicyPage />
+        </PageTransition>
+      } />
+
+      <Route path="/terms" element={
+        <PageTransition>
+          <TermsOfServicePage />
+        </PageTransition>
+      } />
+
+      <Route path="/cookies" element={
+        <PageTransition>
+          <CookiePolicyPage />
+        </PageTransition>
+      } />
+
+      <Route path="/gdpr" element={
+        <PageTransition>
+          <GDPRPage />
+        </PageTransition>
+      } />
+
+      <Route path="/security" element={
+        <PageTransition>
+          <SecurityPage />
         </PageTransition>
       } />
       

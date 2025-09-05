@@ -36,8 +36,8 @@ const Header = ({ setSidebarOpen }) => {
               <FiCode className="text-white text-sm" />
             </div>
             <div>
-              <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-700">InterviewPrep</h1>
-              <p className="text-[10px] text-gray-500 -mt-1">AI Powered</p>
+              <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-700">InterviewPrep</h1>
+              <p className="text-xs text-gray-500 -mt-1">AI Powered</p>
             </div>
           </div>
         </div>
@@ -85,10 +85,10 @@ const Header = ({ setSidebarOpen }) => {
                 </div>
               )}
               <div className="hidden sm:block text-left">
-                <div className="text-sm font-medium text-gray-900">
+                <div className="text-base font-medium text-gray-900">
                   {user?.name || user?.displayName || user?.email?.split('@')[0] || 'User'}
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-sm text-gray-500">
                   {user?.email || 'user@example.com'}
                 </div>
               </div>

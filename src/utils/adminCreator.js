@@ -126,12 +126,20 @@ export const checkAdminStatus = () => {
  * Use this for development/testing purposes
  */
 export const createDefaultAdmin = async () => {
+  if (process.env.NODE_ENV !== 'development') {
+    throw new Error('Default admin creation is only allowed in development environment');
+  }
+
   const defaultAdminData = {
-    email: 'admin@interviewprep.com',
-    password: 'Admin123!',
+    email: process.env.REACT_APP_DEFAULT_ADMIN_EMAIL || 'admin@interviewprep.com',
+    password: process.env.REACT_APP_DEFAULT_ADMIN_PASSWORD,
     name: 'System Administrator',
     role: 'ADMIN'
   };
+
+  if (!defaultAdminData.password) {
+    throw new Error('Default admin password must be set in environment variables');
+  }
 
   console.log('Creating default admin user:', defaultAdminData.email);
   
