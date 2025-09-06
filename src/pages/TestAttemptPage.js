@@ -37,45 +37,33 @@ const TestAttemptContent = () => {
         const storedSession = localStorage.getItem('currentTestSession');
         let sessionData = null;
 
-        console.log('🔍 TestAttemptPage - Checking session data:');
-        console.log('Location state:', locationState);
-        console.log('Stored session:', storedSession);
-
         if (locationState && locationState.batchId) {
           sessionData = locationState;
-          console.log('✅ Using location state data');
         } else if (storedSession) {
           sessionData = JSON.parse(storedSession);
-          console.log('✅ Using localStorage data');
         }
-
-        console.log('Final session data:', sessionData);
 
         // Ensure we have questions either in sessionData or from localStorage
         if (!sessionData.questions && storedSession) {
           const storedData = JSON.parse(storedSession);
           if (storedData.questions) {
             sessionData.questions = storedData.questions;
-            console.log('✅ Added questions from localStorage to session data');
+
           }
         }
 
         if (!sessionData || !sessionData.questions || sessionData.questions.length === 0) {
-          console.error('❌ No valid session data found');
+
           setInitError('No test session found. Please start a new test from the test setup page.');
           return;
         }
 
-        console.log('✅ Valid session found with', sessionData.questions.length, 'questions');
-
         // Initialize the session
-        console.log('🔄 Initializing test session context...');
         initializeSession(sessionData);
-        console.log('✅ Test session context initialized');
         setIsInitialized(true);
         
       } catch (error) {
-        console.error('Failed to initialize test session:', error);
+
         setInitError('Failed to load test session. Please try again.');
       }
     };

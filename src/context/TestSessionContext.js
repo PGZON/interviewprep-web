@@ -105,22 +105,17 @@ export const TestSessionProvider = ({ children }) => {
 
   // Initialize session from localStorage or props
   const initializeSession = (sessionData) => {
-    console.log('🔄 TestSessionContext - Initializing session with data:', sessionData);
-    
     dispatch({
       type: TEST_SESSION_ACTIONS.SET_SESSION,
       payload: sessionData
     });
     
     if (sessionData.questions) {
-      console.log('📝 Setting questions in context:', sessionData.questions.length, 'questions');
       dispatch({
         type: TEST_SESSION_ACTIONS.SET_QUESTIONS,
         payload: sessionData.questions
       });
     }
-    
-    console.log('✅ Session initialized successfully');
   };
 
   // Set answer for current question
@@ -167,7 +162,7 @@ export const TestSessionProvider = ({ children }) => {
     
     // Skip API calls for demo sessions
     if (state.sessionId.includes('demo-session')) {
-      console.log('Demo mode - skipping prefetch API call');
+
       return;
     }
 
@@ -185,7 +180,7 @@ export const TestSessionProvider = ({ children }) => {
         dispatch({ type: TEST_SESSION_ACTIONS.SET_PREFETCHING, payload: false });
       }
     } catch (error) {
-      console.error('Failed to prefetch next batch:', error);
+
       dispatch({ type: TEST_SESSION_ACTIONS.SET_PREFETCHING, payload: false });
     }
   };

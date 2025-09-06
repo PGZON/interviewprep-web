@@ -14,17 +14,7 @@ const UserProfileCard = () => {
       setError(null);
       const response = await axiosInstance.get('/user/me');
       setUserInfo(response.data);
-      console.log('User info loaded:', response.data);
     } catch (error) {
-      console.error('Failed to fetch user info:', error);
-      console.error('Error details:', {
-        message: error.message,
-        status: error.response?.status,
-        statusText: error.response?.statusText,
-        data: error.response?.data,
-        url: error.config?.url
-      });
-      
       let errorMessage = 'Failed to load user info';
       
       if (error.response?.status === 401) {

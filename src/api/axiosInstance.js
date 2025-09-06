@@ -16,14 +16,7 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     const token = localStorage.getItem("authToken") || localStorage.getItem("token");
     
-    // Enhanced logging for debugging
-    console.log('🔍 Axios Request Details:', {
-      url: `${config.baseURL}${config.url}`,
-      method: config.method?.toUpperCase(),
-      hasToken: !!token,
-      tokenPreview: token ? `${token.substring(0, 20)}...` : 'No token',
-      headers: config.headers
-    });
+
     
     if (token) {
       // Check if token should be refreshed proactively
@@ -47,10 +40,8 @@ axiosInstance.interceptors.request.use(
               localStorage.setItem("authToken", newToken);
               localStorage.setItem("token", newToken);
               config.headers["Authorization"] = `Bearer ${newToken}`;
-              console.log('✅ Token refreshed proactively');
             }
           } catch (refreshError) {
-            console.warn('⚠️ Preemptive token refresh failed, will handle on 401:', refreshError);
             config.headers["Authorization"] = `Bearer ${token}`;
           }
         } else {
@@ -59,10 +50,6 @@ axiosInstance.interceptors.request.use(
       } else {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
-      
-      console.log('✅ Authorization header added:', config.headers["Authorization"]?.substring(0, 30) + '...');
-    } else {
-      console.warn('⚠️ No authentication token found in localStorage');
     }
     
     return config;

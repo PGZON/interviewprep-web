@@ -173,7 +173,7 @@ const RecentLogsSection = () => {
       });
       setLogs(response.data);
     } catch (error) {
-      console.warn('Admin logs API unavailable, using sample data:', error);
+
       // Filter sample data based on current filter
       const sampleLogs = getSampleLogs();
       const filteredLogs = filter === 'all' 

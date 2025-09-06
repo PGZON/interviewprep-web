@@ -40,7 +40,7 @@ const AdminDashboard = () => {
         const response = await axiosInstance.get('/admin/stats');
         setAdminStats(response.data);
       } catch (error) {
-        console.warn('Admin stats API unavailable, using sample data:', error);
+
         // Use sample data as fallback
         setAdminStats(sampleStats);
       } finally {

@@ -11,9 +11,7 @@ const OptionList = () => {
 
   if (!question) return null;
 
-  console.log('🔍 OptionList - Current question:', question);
-  console.log('🔍 OptionList - Question ID:', question.id);
-  console.log('🔍 OptionList - Selected answer:', selectedAnswer);
+
 
   // Extract options from question object
   let options = [];
@@ -24,7 +22,7 @@ const OptionList = () => {
       id: String.fromCharCode(65 + index), // A, B, C, D
       text: optionText
     }));
-    console.log('✅ Using array options:', options);
+
   } else {
     // Fallback for individual option properties
     options = [
@@ -33,7 +31,7 @@ const OptionList = () => {
       { id: 'C', text: question.optionC || question.option3 },
       { id: 'D', text: question.optionD || question.option4 }
     ].filter(option => option.text); // Filter out empty options
-    console.log('✅ Using individual options:', options);
+
   }
 
   const handleOptionSelect = (optionId) => {

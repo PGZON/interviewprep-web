@@ -34,7 +34,7 @@ const SystemHealthWidget = () => {
       setHealthData(response.data);
       setLastUpdate(new Date());
     } catch (error) {
-      console.warn('System health API unavailable, using sample data:', error);
+
       setHealthData(sampleHealthData);
       setLastUpdate(new Date());
     } finally {

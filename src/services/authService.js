@@ -62,8 +62,6 @@ API.interceptors.response.use(
 
 // Authentication API calls
 export const login = async (credentials) => {
-  console.log('Sending login request with:', credentials);
-  
   try {
     // First authenticate with Firebase
     const userCredential = await signInWithEmailAndPassword(
@@ -71,14 +69,6 @@ export const login = async (credentials) => {
       credentials.email, 
       credentials.password
     );
-    
-    // Log important Firebase user details
-    console.log('Firebase authentication successful. User details:', {
-      uid: userCredential.user.uid,
-      email: userCredential.user.email,
-      emailVerified: userCredential.user.emailVerified,
-      providerId: userCredential.user.providerId
-    });
     
     // Verify Firebase user and UID are valid
     await verifyFirebaseUser(userCredential.user);

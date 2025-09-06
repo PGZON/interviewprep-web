@@ -10,9 +10,6 @@ import {
 } from 'react-icons/fi';
 
 const StatCards = ({ stats }) => {
-  // Debug logging
-  console.log('🔍 StatCards - Received stats:', stats);
-  
   // TEMPORARY: Test with hardcoded data to verify UI works
   const testStats = {
     totalTests: 5,
@@ -36,8 +33,7 @@ const StatCards = ({ stats }) => {
   const useTestData = process.env.NODE_ENV === 'development';
   const currentStats = useTestData ? testStats : { ...defaultStats, ...stats };
   
-  console.log('🔍 StatCards - Current stats after merge:', currentStats);
-  console.log('🔍 StatCards - Using test data:', useTestData);
+
 
   const statItems = [
     {

@@ -7,14 +7,7 @@ const AdminRoute = ({ children }) => {
   // Check both possible token keys for compatibility
   const token = localStorage.getItem('authToken') || localStorage.getItem('token');
   
-  console.log('AdminRoute: Checking token...');
-  console.log('authToken exists:', !!localStorage.getItem('authToken'));
-  console.log('token exists:', !!localStorage.getItem('token'));
-  console.log('Using token:', token ? token.substring(0, 20) + '...' : 'none');
-  
   if (!token) {
-    console.log('AdminRoute: No auth token found, redirecting to /auth');
-    console.log('Available localStorage keys:', Object.keys(localStorage));
     return <Navigate to="/auth" replace />;
   }
 
@@ -24,14 +17,10 @@ const AdminRoute = ({ children }) => {
     console.log('Decoded token payload:', decodedToken);
     
     const userRole = decodedToken.role || decodedToken.authorities?.[0] || '';
-    console.log('AdminRoute: User role found:', userRole);
-    
     // Check if user has admin role
     const isAdmin = userRole.includes('ADMIN') || userRole.includes('ROLE_ADMIN');
-    console.log('AdminRoute: Is admin?', isAdmin);
     
     if (!isAdmin) {
-      console.log('AdminRoute: Access denied - insufficient privileges');
       return (
         <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-red-50 flex items-center justify-center p-6">
           <div className="max-w-md w-full bg-white/80 backdrop-blur-md rounded-xl p-8 shadow-lg border border-white/20 text-center">
