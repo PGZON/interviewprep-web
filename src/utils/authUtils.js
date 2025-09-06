@@ -1,44 +1,38 @@
 import { jwtDecode } from 'jwt-decode';
 
-/**
- * Determines the appropriate redirect path after successful login
- * based on user role
- */
+// Cache for decoded tokens to prevent repeated decoding
+const tokenCache = new Map();
+
+// Dispatch auth state change event
+export const dispatchAuthChange = () => {
+  window.dispatchEvent(new CustomEvent('auth-state-change'));
+};
+
 export const getPostLoginRedirect = () => {
-  const token = localStorage.getItem('authToken') || localStorage.getItem('token');
+  const token = localStorage.getItem('authToken');
   
   if (!token) {
-    console.log('No token found, redirecting to auth');
     return '/auth';
   }
 
   try {
-    const decodedToken = jwtDecode(token);
-    console.log('Decoded token for redirect:', decodedToken);
+    let decodedToken = tokenCache.get(token);
     
-    // More flexible role extraction from different JWT formats
+    if (!decodedToken) {
+      decodedToken = jwtDecode(token);
+      tokenCache.set(token, decodedToken);
+    }
+    
     const userRole = decodedToken.role || 
-                    (decodedToken.authorities ? decodedToken.authorities[0] : '') || 
+                    (decodedToken.authorities?.[0]) || 
                     decodedToken.scope || 
                     '';
     
-    console.log('User role for redirect:', userRole);
+    // Notify listeners about authentication state change
+    dispatchAuthChange();
     
-    // Check if user is admin
-    if (userRole && (
-        userRole.includes('ADMIN') || 
-        userRole.includes('ROLE_ADMIN') || 
-        (Array.isArray(decodedToken.roles) && decodedToken.roles.some(r => r.includes('ADMIN')))
-    )) {
-      console.log('Admin user detected, redirecting to /admin');
-      return '/admin';
-    } else {
-      console.log('Regular user detected, redirecting to /dashboard');
-      return '/dashboard';
-    }
+    return userRole?.includes('ADMIN') ? '/admin' : '/dashboard';
   } catch (error) {
-    console.error('Error decoding token for redirect:', error, 'Token:', token.substring(0, 20) + '...');
-    // Even with token error, send to dashboard to avoid logout loop
     return '/dashboard';
   }
 };
@@ -47,71 +41,66 @@ export const getPostLoginRedirect = () => {
  * Check if current user has admin privileges
  */
 export const isAdmin = () => {
-  const token = localStorage.getItem('authToken') || localStorage.getItem('token');
+  const token = localStorage.getItem('authToken');
   
   if (!token) return false;
 
   try {
-    const decodedToken = jwtDecode(token);
-    // More flexible role extraction from different JWT formats
-    const userRole = decodedToken.role || 
-                    (decodedToken.authorities ? decodedToken.authorities[0] : '') || 
-                    decodedToken.scope || 
-                    '';
-                    
-    return userRole && (
-        userRole.includes('ADMIN') || 
-        userRole.includes('ROLE_ADMIN') || 
-        (Array.isArray(decodedToken.roles) && decodedToken.roles.some(r => r.includes('ADMIN')))
-    );
+    let decodedToken = tokenCache.get(token);
+    
+    if (!decodedToken) {
+      decodedToken = jwtDecode(token);
+      tokenCache.set(token, decodedToken);
+    }
+
+    return decodedToken.role?.includes('ADMIN') || false;
   } catch (error) {
-    console.error('Error checking admin status:', error);
     return false;
   }
 };
 
 /**
- * Enhanced authentication check with role information
+ * Get the current authentication status and redirect path
  */
 export const getAuthStatus = () => {
   const token = localStorage.getItem('authToken');
   
   if (!token) {
-    return { 
-      isAuthenticated: false, 
-      isAdmin: false, 
-      userRole: null,
-      redirectPath: '/auth'
-    };
+    return { isAuthenticated: false, redirectPath: '/auth' };
   }
 
   try {
-    const decodedToken = jwtDecode(token);
-    const userRole = decodedToken.role || decodedToken.authorities?.[0] || '';
-    const isAdminUser = userRole.includes('ADMIN') || userRole.includes('ROLE_ADMIN');
+    let decodedToken = tokenCache.get(token);
     
+    if (!decodedToken) {
+      decodedToken = jwtDecode(token);
+      tokenCache.set(token, decodedToken);
+    }
+
+    // Check if token is expired
+    const currentTime = Date.now() / 1000;
+    if (decodedToken.exp && decodedToken.exp < currentTime) {
+      localStorage.removeItem('authToken');
+      tokenCache.delete(token);
+      dispatchAuthChange();
+      return { isAuthenticated: false, redirectPath: '/auth' };
+    }
+
+    const isUserAdmin = decodedToken.role?.includes('ADMIN');
     return {
       isAuthenticated: true,
-      isAdmin: isAdminUser,
-      userRole: userRole,
-      redirectPath: isAdminUser ? '/admin' : '/dashboard',
-      decodedToken
+      redirectPath: isUserAdmin ? '/admin' : '/dashboard'
     };
   } catch (error) {
-    console.error('Error checking auth status:', error);
-    return { 
-      isAuthenticated: false, 
-      isAdmin: false, 
-      userRole: null,
-      redirectPath: '/auth'
-    };
+    return { isAuthenticated: false, redirectPath: '/auth' };
   }
 };
 
-const authUtils = {
-  getPostLoginRedirect,
-  isAdmin,
-  getAuthStatus
+/**
+ * Clear authentication data and notify listeners
+ */
+export const clearAuth = () => {
+  localStorage.removeItem('authToken');
+  tokenCache.clear();
+  dispatchAuthChange();
 };
-
-export default authUtils;

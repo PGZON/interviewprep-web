@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastProvider } from './contexts/ToastContext';
 import AppRoutes from './routes/AppRoutes';
 import { initEnvironment } from './config/environmentValidator';
+import LoadingSpinner from './components/UI/LoadingSpinner';
 import './styles/global.css';
 
 function App() {
@@ -15,7 +16,9 @@ function App() {
     <div className="App">
       <ToastProvider>
         <Router>
-          <AppRoutes />
+          <Suspense fallback={<LoadingSpinner />}>
+            <AppRoutes />
+          </Suspense>
         </Router>
       </ToastProvider>
     </div>

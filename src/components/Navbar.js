@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { FiMenu, FiX, FiCode } from 'react-icons/fi';
+import { FiMenu, FiX } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../services/authService';
 
@@ -62,8 +62,8 @@ const Navbar = () => {
             onClick={() => navigate('/')}
           >
             <div className="relative">
-              <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 rounded-xl flex items-center justify-center shadow-xl border-2 border-blue-400/30">
-                <FiCode className="text-white text-2xl" />
+              <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center shadow-xl border-2 border-blue-400/30">
+                <img src="/AppLogo.svg" alt="InterviewPrep Logo" className="w-full h-full object-contain p-2" />
               </div>
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-pulse border border-white"></div>
             </div>

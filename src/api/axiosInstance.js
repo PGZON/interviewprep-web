@@ -8,6 +8,7 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true, // Enable sending cookies with requests
 });
 
 // Request interceptor to add Bearer token and handle preemptive refresh

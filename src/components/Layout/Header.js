@@ -23,8 +23,8 @@ const Header = ({ setSidebarOpen }) => {
   return (
     <header className="bg-white/80 backdrop-blur-xl border-b border-white/20 shadow-sm sticky top-0 z-40">
       <div className="flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        {/* Left side - Mobile menu button */}
-        <div className="flex items-center">
+        {/* Left side - Mobile menu button and Logo */}
+        <div className="flex items-center space-x-4">
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden p-2 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-white/50 transition-all duration-200"

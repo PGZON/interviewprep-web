@@ -1,48 +1,56 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
-// Layout Components
+// Layout and Protection
 import DashboardLayout from '../components/Layout/DashboardLayout';
-
-// Pages
-import LandingPage from '../pages/LandingPage';
-import AuthPage from '../pages/AuthPage';
-import OAuthCallback from '../pages/OAuthCallback';
-import FeaturesPage from '../pages/FeaturesPage';
-import PricingPage from '../pages/PricingPage';
-import APIPage from '../pages/APIPage';
-import DemoPage from '../pages/DemoPage';
-import IntegrationsPage from '../pages/IntegrationsPage';
-import AboutPage from '../pages/AboutPage';
-import BlogPage from '../pages/BlogPage';
-import CareersPage from '../pages/CareersPage';
-import ContactPage from '../pages/ContactPage';
-import PressPage from '../pages/PressPage';
-import DocumentationPage from '../pages/DocumentationPage';
-import HelpCenterPage from '../pages/HelpCenterPage';
-import CommunityPage from '../pages/CommunityPage';
-import TutorialsPage from '../pages/TutorialsPage';
-import StatusPage from '../pages/StatusPage';
-import PrivacyPolicyPage from '../pages/PrivacyPolicyPage';
-import TermsOfServicePage from '../pages/TermsOfServicePage';
-import CookiePolicyPage from '../pages/CookiePolicyPage';
-import GDPRPage from '../pages/GDPRPage';
-import SecurityPage from '../pages/SecurityPage';
-import UserDashboard from '../pages/UserDashboard';
-import StartTestPage from '../pages/StartTestPage';
-import TestAttemptPage from '../pages/TestAttemptPage';
-import TestResultPage from '../pages/TestResultPage';
-import ReviewPage from '../pages/ReviewPage';
-import ProfilePage from '../pages/ProfilePage';
-import ProgressPage from '../pages/ProgressPage';
-import AchievementsPage from '../pages/AchievementsPage';
-import AdminDashboard from '../pages/AdminDashboard';
-
-// Route Protection
 import PrivateRoute from './PrivateRoute';
 import AdminRoute from './AdminRoute';
+
+// Custom loading component
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex flex-col items-center space-y-4">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      <p className="text-gray-600">Loading...</p>
+    </div>
+  </div>
+);
+
+// Lazy load all pages
+const LandingPage = lazy(() => import('../pages/LandingPage'));
+const AuthPage = lazy(() => import('../pages/AuthPage'));
+const OAuthCallback = lazy(() => import('../pages/OAuthCallback'));
+const FeaturesPage = lazy(() => import('../pages/FeaturesPage'));
+const PricingPage = lazy(() => import('../pages/PricingPage'));
+const APIPage = lazy(() => import('../pages/APIPage'));
+const DemoPage = lazy(() => import('../pages/DemoPage'));
+const IntegrationsPage = lazy(() => import('../pages/IntegrationsPage'));
+const AboutPage = lazy(() => import('../pages/AboutPage'));
+const BlogPage = lazy(() => import('../pages/BlogPage'));
+const CareersPage = lazy(() => import('../pages/CareersPage'));
+const ContactPage = lazy(() => import('../pages/ContactPage'));
+const PressPage = lazy(() => import('../pages/PressPage'));
+const DocumentationPage = lazy(() => import('../pages/DocumentationPage'));
+const HelpCenterPage = lazy(() => import('../pages/HelpCenterPage'));
+const CommunityPage = lazy(() => import('../pages/CommunityPage'));
+const TutorialsPage = lazy(() => import('../pages/TutorialsPage'));
+const StatusPage = lazy(() => import('../pages/StatusPage'));
+const PrivacyPolicyPage = lazy(() => import('../pages/PrivacyPolicyPage'));
+const TermsOfServicePage = lazy(() => import('../pages/TermsOfServicePage'));
+const CookiePolicyPage = lazy(() => import('../pages/CookiePolicyPage'));
+const GDPRPage = lazy(() => import('../pages/GDPRPage'));
+const SecurityPage = lazy(() => import('../pages/SecurityPage'));
+const UserDashboard = lazy(() => import('../pages/UserDashboard'));
+const StartTestPage = lazy(() => import('../pages/StartTestPage'));
+const TestAttemptPage = lazy(() => import('../pages/TestAttemptPage'));
+const TestResultPage = lazy(() => import('../pages/TestResultPage'));
+const ReviewPage = lazy(() => import('../pages/ReviewPage'));
+const ProfilePage = lazy(() => import('../pages/ProfilePage'));
+const ProgressPage = lazy(() => import('../pages/ProgressPage'));
+const AchievementsPage = lazy(() => import('../pages/AchievementsPage'));
+const AdminDashboard = lazy(() => import('../pages/AdminDashboard'));
 
 const PageTransition = ({ children }) => {
   const location = useLocation();
@@ -56,7 +64,9 @@ const PageTransition = ({ children }) => {
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.2, ease: "easeInOut" }}
       >
-        {children}
+        <Suspense fallback={<LoadingFallback />}>
+          {children}
+        </Suspense>
       </motion.div>
     </AnimatePresence>
   );

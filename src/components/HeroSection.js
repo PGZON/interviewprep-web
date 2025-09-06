@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FiArrowRight, FiPlay, FiStar, FiTrendingUp } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
   
@@ -132,8 +134,8 @@ const HeroSection = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12"
             >
-              <motion.a
-                href="#features"
+              <motion.button
+                onClick={() => navigate('/auth')}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 className="group btn-gradient btn-glow px-8 py-4 rounded-xl font-semibold text-lg text-white flex items-center justify-center space-x-2 relative overflow-hidden"
@@ -145,7 +147,7 @@ const HeroSection = () => {
                 >
                   <FiArrowRight className="w-5 h-5" />
                 </motion.div>
-              </motion.a>
+              </motion.button>
               
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
